@@ -1,0 +1,89 @@
+/* Content script styles for YouTube Downloader */
+
+.yt-downloader-overlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+    max-width: 250px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.yt-downloader-overlay.hidden {
+    display: none;
+}
+
+.yt-downloader-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #ff0000;
+}
+
+.yt-downloader-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.yt-downloader-btn {
+    background: linear-gradient(45deg, #ff0000, #cc0000);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.yt-downloader-btn:hover {
+    background: linear-gradient(45deg, #cc0000, #990000);
+    transform: translateY(-1px);
+}
+
+.yt-downloader-btn:active {
+    transform: translateY(0);
+}
+
+.yt-downloader-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.yt-downloader-status {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.yt-downloader-status.loading {
+    background: rgba(255, 255, 0, 0.2);
+    color: #ffff99;
+}
+
+.yt-downloader-status.success {
+    background: rgba(0, 255, 0, 0.2);
+    color: #99ff99;
+}
+
+.yt-downloader-status.error {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff9999;
+}
+
+/* Hide the overlay on non-YouTube pages */
+body:not([data-page-type="watch"]) .yt-downloader-overlay {
+    display: none;
+}
