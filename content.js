@@ -195,22 +195,27 @@ class YouTubeDownloader {
 
     async getPlayerResponse() {
         try {
-            // Extract player response from the page
-            const scripts = document.querySelectorAll('script');
-            
-            for (const script of scripts) {
-                const content = script.textContent;
-                if (content && content.includes('var ytInitialPlayerResponse')) {
-                    const match = content.match(/var ytInitialPlayerResponse\s*=\s*({.+?});/);
-                    if (match) {
-                        return JSON.parse(match[1]);
-                    }
+            // Use the global player response if available
+            if (window.ytInitialPlayerResponse) {
+                return window.ytInitialPlayerResponse;
+            }
+
+            // Try to extract from ytplayer.config
+            if (window.ytplayer && window.ytplayer.config && window.ytplayer.config.args) {
+                const playerResponseString = window.ytplayer.config.args.player_response;
+                if (playerResponseString) {
+                    return JSON.parse(playerResponseString);
                 }
             }
 
-            // Alternative method: look for player response in window object
-            if (window.ytInitialPlayerResponse) {
-                return window.ytInitialPlayerResponse;
+            // Fallback: search through script tags
+            const scripts = document.querySelectorAll('script');
+            for (const script of scripts) {
+                const content = script.textContent;
+                const match = content.match(/ytInitialPlayerResponse\s*=\s*(\{.*?\});/s);
+                if (match) {
+                    return JSON.parse(match[1]);
+                }
             }
 
             return null;
@@ -219,6 +224,7 @@ class YouTubeDownloader {
             return null;
         }
     }
+
 
     sanitizeFilename(filename) {
         // Remove invalid characters for filenames

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function displayVideoInfo(videoData) {
     const content = document.getElementById('content');
-    
+
     content.innerHTML = `
         <div class="video-info">
             <div class="video-title">${videoData.title || 'Unknown Title'}</div>
@@ -40,26 +40,38 @@ function displayVideoInfo(videoData) {
         <div class="download-section">
             <div class="section-title">📹 Video Formats</div>
             <div class="download-buttons">
-                <button class="download-btn" onclick="downloadVideo('360p')">360p MP4</button>
-                <button class="download-btn" onclick="downloadVideo('720p')">720p MP4</button>
-                <button class="download-btn" onclick="downloadVideo('1080p')">1080p MP4</button>
-                <button class="download-btn" onclick="downloadVideo('1440p')">1440p MP4</button>
+                <button class="download-btn" id="btn-360p">360p MP4</button>
+                <button class="download-btn" id="btn-720p">720p MP4</button>
+                <button class="download-btn" id="btn-1080p">1080p MP4</button>
+                <button class="download-btn" id="btn-1440p">1440p MP4</button>
             </div>
         </div>
         
         <div class="download-section">
             <div class="section-title">🎵 Audio Formats</div>
             <div class="download-buttons">
-                <button class="download-btn" onclick="downloadAudio('mp3')">MP3</button>
-                <button class="download-btn" onclick="downloadAudio('m4a')">M4A</button>
-                <button class="download-btn" onclick="downloadAudio('webm')">WebM Audio</button>
-                <button class="download-btn" onclick="downloadAudio('wav')">WAV</button>
+                <button class="download-btn" id="btn-mp3">MP3</button>
+                <button class="download-btn" id="btn-m4a">M4A</button>
+                <button class="download-btn" id="btn-webm">WebM Audio</button>
+                <button class="download-btn" id="btn-wav">WAV</button>
             </div>
         </div>
         
         <div id="status"></div>
     `;
+
+    // Attach listeners
+    document.getElementById('btn-360p')?.addEventListener('click', () => downloadVideo('360p'));
+    document.getElementById('btn-720p')?.addEventListener('click', () => downloadVideo('720p'));
+    document.getElementById('btn-1080p')?.addEventListener('click', () => downloadVideo('1080p'));
+    document.getElementById('btn-1440p')?.addEventListener('click', () => downloadVideo('1440p'));
+
+    document.getElementById('btn-mp3')?.addEventListener('click', () => downloadAudio('mp3'));
+    document.getElementById('btn-m4a')?.addEventListener('click', () => downloadAudio('m4a'));
+    document.getElementById('btn-webm')?.addEventListener('click', () => downloadAudio('webm'));
+    document.getElementById('btn-wav')?.addEventListener('click', () => downloadAudio('wav'));
 }
+
 
 async function downloadVideo(quality) {
     showStatus('Preparing download...', 'loading');
